@@ -74,6 +74,24 @@ npm run deploy
 
 ## Usage
 
+### Quick Setup with emails.csv
+
+If you have an `emails.csv` file with email addresses (one per line), you can quickly create a group:
+
+```bash
+# Create a group called "team" with all emails from emails.csv
+npm run populate-group team
+
+# Or use the interactive manager
+npm run manage-groups
+```
+
+The script will:
+1. Read all emails from `emails.csv`
+2. Validate each email address
+3. Create a group in KV storage with the specified name
+4. Handle multiple emails per line (comma-separated)
+
 ### Email Forwarding
 
 Send emails to: `groupname@yourdomain.com`
@@ -130,6 +148,53 @@ npm test
 
 ```bash
 npm run tail
+```
+
+## Management Scripts
+
+### Quick Group Creation
+
+Create a group from your `emails.csv` file:
+
+```bash
+npm run populate-group <group-name>
+```
+
+Example:
+```bash
+npm run populate-group team
+```
+
+### Interactive Group Manager
+
+Launch the interactive group manager:
+
+```bash
+npm run manage-groups
+```
+
+This provides a menu-driven interface to:
+- Create groups from emails.csv
+- List all existing groups
+- View group details and recipients
+- Delete groups
+
+### Command Line Group Management
+
+You can also use the manager in command-line mode:
+
+```bash
+# Create a group
+npm run manage-groups create team
+
+# List all groups
+npm run manage-groups list
+
+# Get group details
+npm run manage-groups get team
+
+# Delete a group
+npm run manage-groups delete team
 ```
 
 ## API Reference
@@ -229,6 +294,7 @@ The worker includes comprehensive error handling:
 1. **Email not forwarding**: Check that your domain is properly configured in Cloudflare Email Routing
 2. **KV namespace errors**: Ensure the namespace ID is correctly configured in `wrangler.jsonc`
 3. **Worker not receiving emails**: Verify the Custom Address rule is set to send to your worker
+4. **KV data not showing in web UI**: Sometimes the Cloudflare dashboard has sync delays. Use `wrangler kv key list --binding EMAIL_LIST --preview false` to verify data exists
 
 ### Debugging
 
@@ -236,6 +302,22 @@ Use the tail command to see real-time logs:
 
 ```bash
 npm run tail
+```
+
+### Verifying KV Data
+
+To check if your email groups are properly stored:
+
+```bash
+# List all groups
+npm run manage-groups list
+
+# Get specific group details
+npm run manage-groups get groupname
+
+# Or use wrangler directly
+wrangler kv key list --binding EMAIL_LIST --preview false
+wrangler kv key get "groupname" --binding EMAIL_LIST --preview false
 ```
 
 ## Contributing

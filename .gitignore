@@ -179,3 +179,4 @@ dist
 
 # Email lists (sensitive data)
 emails.csv
+temp-emails.json

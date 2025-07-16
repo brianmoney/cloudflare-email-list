@@ -11,18 +11,19 @@ export default {
 		try {
 			const recipientAddress = message.to;
 			console.log(`Processing email for: ${recipientAddress}`);
-
-			// Extract group name from email address (e.g., group@domain.com -> group)
-			const groupName = recipientAddress.split('@')[0];
-			
-			// Get recipients list from KV storage
-			const recipientsData = await env.EMAIL_LIST.get(groupName);
-			
-			if (!recipientsData) {
-				console.log(`No recipients found for group: ${groupName}`);
-				// Optionally, you could forward to a default admin address
-				return;
-			}
+		// Extract group name from email address (e.g., group@domain.com -> group)
+		const groupName = recipientAddress.split('@')[0];
+		console.log(`Looking for group: ${groupName}`);
+		
+		// Get recipients list from KV storage
+		const recipientsData = await env.EMAIL_LIST.get(groupName);
+		console.log(`KV lookup result for "${groupName}":`, recipientsData);
+		
+		if (!recipientsData) {
+			console.log(`No recipients found for group: ${groupName}`);
+			// Optionally, you could forward to a default admin address
+			return;
+		}
 
 			const recipients = JSON.parse(recipientsData);
 			console.log(`Found ${recipients.length} recipients for group: ${groupName}`);

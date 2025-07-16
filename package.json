@@ -1,15 +1,17 @@
 {
 	"name": "cloudflare-email-list",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"private": true,
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
 		"test": "vitest",
-		"setup-kv": "wrangler kv:namespace create 'email_list'",
-		"setup-kv-preview": "wrangler kv:namespace create 'email_list' --preview",
-		"tail": "wrangler tail"
+		"setup-kv": "wrangler kv namespace create 'email_list'",
+		"setup-kv-preview": "wrangler kv namespace create 'email_list' --preview",
+		"tail": "wrangler tail",
+		"populate-group": "node scripts/populate-group.js",
+		"manage-groups": "node scripts/manage-groups.js"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.8.19",
