@@ -6,7 +6,10 @@
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"test": "vitest"
+		"test": "vitest",
+		"setup-kv": "wrangler kv:namespace create 'email_list'",
+		"setup-kv-preview": "wrangler kv:namespace create 'email_list' --preview",
+		"tail": "wrangler tail"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.8.19",
